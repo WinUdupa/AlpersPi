@@ -1,52 +1,50 @@
-# AlpersPi 🍓📡
+# AlpersPi 🚓🔍
 
-A lightweight Raspberry Pi-based monitoring system for real-time environmental data collection and analysis, designed for educational and prototyping use in IoT and smart agriculture systems.
+A real-time number plate detection and recognition system built using OpenCV and deep learning, designed to run on lightweight devices like Raspberry Pi. This project aims to automate vehicle monitoring and surveillance using license plate detection and OCR (Optical Character Recognition).
 
 ## 🚀 Overview
 
-**AlpersPi** combines the power of Raspberry Pi with sensor modules to collect real-time data such as temperature, humidity, light, and soil moisture. This data is processed and optionally visualized or pushed to cloud platforms like ThingSpeak or Firebase for remote monitoring and automation.
+**AlpersPi** processes live video streams to detect number plates and extract the license numbers from vehicles in real-time. The system uses pre-trained object detection models to locate the plate and applies OCR techniques to extract readable text.
 
 ## 🧠 Features
 
-- 🌡️ Real-time environmental data capture (temperature, humidity, etc.)
-- 💧 Soil moisture and light intensity sensing
-- 📈 Option to send data to cloud (ThingSpeak / Firebase)
-- 🌐 Local display using Flask or GPIO-driven display
-- 🛠️ Easily extendable for custom sensors or logic
+- 📹 Real-time video stream processing (Raspberry Pi camera or USB webcam)
+- 🪪 Automatic number plate detection using deep learning (YOLO or Haar Cascades)
+- 🔠 OCR-based license number extraction using Tesseract or EasyOCR
+- 💾 Optional logging of detected numbers with timestamp
+- 🧠 Lightweight design optimized for edge devices
 
 ## 🛠️ Tech Stack
 
-- **Raspberry Pi (Python)**
-- **DHT11 / DHT22**
-- **Soil Moisture Sensor**
-- **LDR (Light Dependent Resistor)**
-- **ThingSpeak / Firebase (optional)**
-- **Flask (for local web dashboard)**
+- **Python**
+- **OpenCV**
+- **YOLO / Haar Cascade**
+- **EasyOCR / Tesseract**
+- **Raspberry Pi**
 
 ## 📁 Project Structure
 
 ```
 AlpersPi/
 │
-├── sensors/
-│   ├── temperature.py       # DHT sensor reading
-│   ├── soil_moisture.py     # Soil moisture interface
-│   └── light_sensor.py      # LDR logic
-├── cloud/
-│   ├── firebase.py          # Push data to Firebase
-│   └── thingspeak.py        # Push data to ThingSpeak
-├── web/
-│   └── app.py               # Flask-based local dashboard
-├── main.py                  # Main orchestrator script
+├── models/                  # Pre-trained models for plate detection
+├── src/
+│   ├── detector.py          # Plate detection logic
+│   ├── ocr.py               # OCR logic for reading plate numbers
+│   ├── utils.py             # Helper functions
+│   └── main.py              # Main execution script (video capture + detection)
+├── samples/                 # Sample test images and videos
+├── logs/                    # Detected plates and timestamps
 ├── README.md                # Project documentation
 └── requirements.txt         # Python dependencies
 ```
 
 ## ⚙️ How It Works
 
-1. Sensors connected to the Raspberry Pi gather environmental data.
-2. Data is processed and optionally logged locally or pushed to the cloud.
-3. A local Flask app (if enabled) displays current readings on a web dashboard.
+1. Captures frames from a live video stream.
+2. Detects license plate in each frame using a trained model.
+3. Extracts the plate region and runs OCR to recognize characters.
+4. Displays the result in real-time and optionally logs the plate info.
 
 ## 📦 Installation
 
@@ -63,34 +61,24 @@ cd AlpersPi
 pip install -r requirements.txt
 ```
 
-3. Run the project:
+3. Run the system:
 
 ```bash
-python main.py
-```
-
-For Flask dashboard:
-
-```bash
-cd web
-python app.py
+python src/main.py
 ```
 
 ## 🧪 Example Output
 
 ```
-Temperature: 28.4°C
-Humidity: 62%
-Soil Moisture: Wet
-Light Intensity: Low
-Data pushed to ThingSpeak ✔
+[INFO] Detected Plate: KA03MR1234 at 2025-06-29 16:30:12
+[INFO] Detected Plate: KA01AB5678 at 2025-06-29 16:30:45
 ```
 
 ## 📌 To Do
 
-- [ ] Add support for more sensors (e.g., pH, CO2)
-- [ ] Add dashboard for historical trends
-- [ ] Integrate SMS/Email alerts
+- [ ] Improve OCR accuracy under low-light conditions
+- [ ] Add vehicle make/model classification
+- [ ] Integrate with cloud database or dashboard
 
 ## 📜 License
 
@@ -98,8 +86,8 @@ This project is licensed under the MIT License.
 
 ## 🤝 Contributing
 
-Feel free to fork this repo and submit pull requests. Suggestions and improvements are always welcome!
+Pull requests and suggestions are welcome. Let's build a smarter traffic surveillance system together!
 
 ---
 
-**Created by [Vineeth Udupa](https://github.com/WinUdupa)** 🍀
+**Created by [Vineeth Udupa](https://github.com/WinUdupa)** 🎯
